@@ -1,6 +1,6 @@
 :root {
     --fontTexto:  'Raleway', sans-serif;
-    --fontHeading: 'Staatliches', cursive;
+    --fontHeading: 'Staatliches', sans-serif cursive;
 
     /** Colores **/
     --azul : #00487C;

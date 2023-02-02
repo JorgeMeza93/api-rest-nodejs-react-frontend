@@ -1,5 +1,6 @@
 import React, { useEffect, useState, Fragment } from 'react'
-import clienteAxios from '../../config/axios'
+import clienteAxios from '../../config/axios';
+import Cliente from './Cliente';
 
 const Clientes = () => {
   const [ clientes, guardarClientes ] = useState([]);
@@ -16,7 +17,7 @@ const Clientes = () => {
       <h2>Clientes</h2>
       <ul className='listado-clientes'>
         {clientes.map( cliente => {
-          
+           return <Cliente key={cliente._id} cliente={cliente} />
         })}
       </ul>
     </Fragment>

@@ -3,6 +3,8 @@ import Header from "./components/layout/Header";
 import Navegacion from "./components/layout/Navegacion";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Clientes from "./components/clientes/Clientes";
+import Pedidos from "./components/pedidos/pedidos";
+import Productos from "./components/productos/productos";
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
           <main className="caja-contenido col-9">
             <Routes>
               <Route path="/" element={<Clientes/>}/>
+              <Route path="/pedidos" element={<Pedidos/>}/>
+              <Route path="/productos" element={<Productos/>}/>
             </Routes>
           </main>
         </div>

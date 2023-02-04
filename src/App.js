@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Clientes from "./components/clientes/Clientes";
 import Pedidos from "./components/pedidos/pedidos";
 import Productos from "./components/productos/productos";
+import NuevoCliente from "./components/clientes/NuevoCliente";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <main className="caja-contenido col-9">
             <Routes>
               <Route path="/" element={<Clientes/>}/>
+              <Route exact path="/clientes/nuevo" element={<NuevoCliente/>} />
               <Route path="/pedidos" element={<Pedidos/>}/>
               <Route path="/productos" element={<Productos/>}/>
             </Routes>

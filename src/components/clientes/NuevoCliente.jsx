@@ -1,4 +1,6 @@
-import React, {Fragment, useState} from 'react'
+import React, {Fragment, useState} from 'react';
+import clienteAxios from '../../config/axios';
+import Swal from "sweetalert2";
 
 const NuevoCliente = () => {
   const [cliente, guardarCliente] = useState({
@@ -19,10 +21,22 @@ const NuevoCliente = () => {
     let valido = !nombre.length || !apellido.length || !empresa.length || !email.length || !telefono.length;
     return valido;
   }
+  const agregarCliente = e => {
+    e.preventDefault();
+    clienteAxios.post("/clientes", cliente)
+        .then( res => {
+            if(res.data.code === 11000){
+                console.log("Error de duplicado en Mongo");
+            }
+            else{
+                console.log(res.data);
+            }
+        })
+  }
   return (
     <Fragment>
         <h2>Nuevo Cliente</h2>
-        <form >
+        <form onSubmit={agregarCliente}>
             <legend>Llena todos los campos</legend>
             <div className='campo'>
                 <label>Nombre: </label>

@@ -6,6 +6,7 @@ import Clientes from "./components/clientes/Clientes";
 import Pedidos from "./components/pedidos/pedidos";
 import Productos from "./components/productos/productos";
 import NuevoCliente from "./components/clientes/NuevoCliente";
+import { EditarCliente } from "./components/clientes/EditarCliente";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Clientes/>}/>
               <Route exact path="/clientes/nuevo" element={<NuevoCliente/>} />
+              <Route exact path="/clientes/editar/:id" element={ <EditarCliente/>}/>
               <Route path="/pedidos" element={<Pedidos/>}/>
               <Route path="/productos" element={<Productos/>}/>
             </Routes>

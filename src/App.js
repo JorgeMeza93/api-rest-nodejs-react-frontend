@@ -4,7 +4,7 @@ import Navegacion from "./components/layout/Navegacion";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Clientes from "./components/clientes/Clientes";
 import Pedidos from "./components/pedidos/pedidos";
-import Productos from "./components/productos/productos";
+import Productos from "./components/productos/Productos";
 import NuevoCliente from "./components/clientes/NuevoCliente";
 import { EditarCliente } from "./components/clientes/EditarCliente";
 import EditarProducto from "./components/productos/EditarProducto";

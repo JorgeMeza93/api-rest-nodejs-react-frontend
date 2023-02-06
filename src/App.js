@@ -7,6 +7,8 @@ import Pedidos from "./components/pedidos/pedidos";
 import Productos from "./components/productos/productos";
 import NuevoCliente from "./components/clientes/NuevoCliente";
 import { EditarCliente } from "./components/clientes/EditarCliente";
+import EditarProducto from "./components/productos/EditarProducto";
+import NuevoProducto from "./components/productos/NuevoProducto";
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
               <Route exact path="/clientes/editar/:id" element={ <EditarCliente/>}/>
               <Route path="/pedidos" element={<Pedidos/>}/>
               <Route path="/productos" element={<Productos/>}/>
+              <Route exact path="/productos/nuevo" element={<NuevoProducto/>} />
+              <Route exact path="/productos/editar/:id" element={ <EditarProducto/> } />
             </Routes>
           </main>
         </div>

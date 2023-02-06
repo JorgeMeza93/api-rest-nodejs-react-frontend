@@ -12,7 +12,7 @@ const Clientes = () => {
   }
   useEffect( () => {
     consultarAPI();
-  }, [])
+  }, [clientes])   // Cuando clientes cambie vuelve a hacer el llamado a la API
   return (
     <Fragment>
       <h2>Clientes</h2>

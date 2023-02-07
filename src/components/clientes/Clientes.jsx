@@ -2,6 +2,7 @@ import React, { useEffect, useState, Fragment } from 'react'
 import clienteAxios from '../../config/axios';
 import Cliente from './Cliente';
 import { Link } from 'react-router-dom';
+import Spinner from '../layout/Spinner';
 
 const Clientes = () => {
   const [ clientes, guardarClientes ] = useState([]);
@@ -13,6 +14,9 @@ const Clientes = () => {
   useEffect( () => {
     consultarAPI();
   }, [clientes])   // Cuando clientes cambie vuelve a hacer el llamado a la API
+  if(! clientes.length){
+    return <Spinner/>
+  }
   return (
     <Fragment>
       <h2>Clientes</h2>

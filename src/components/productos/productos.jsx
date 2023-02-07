@@ -11,7 +11,7 @@ const Productos = () => {
   }
   useEffect( () => {
     consultarAPI();
-  }, []);
+  }, [productos]);
   return (
     <Fragment>
       <h2>Productos</h2>

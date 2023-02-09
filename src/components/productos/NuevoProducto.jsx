@@ -4,39 +4,41 @@ import clienteAxios from '../../config/axios';
 import { useNavigate } from 'react-router-dom';
 
 const NuevoProducto = () => {
+  
   const [producto, guardarProducto] = useState({
     nombre: "",
     precio: ""
-  })
+  });
   const [archivo, guardarArchivo] = useState("");
+  const navigate = useNavigate();
   const leerInformacionProducto = e => {
     guardarProducto({
       ...producto,
       [e.target.name]: e.target.value
     })
   }
-  const navigate = useNavigate();
   const leerArchivo = e => {
-    guardarArchivo( e.target.files)
+    guardarArchivo( e.target.files[0])
+    console.log(e.target.files[0].name)
   }
   const agregarProducto = async (e) => {
     e.preventDefault();
     //Especificar como form data para que la api acepte este formato
     const formData = new FormData();
+    formData.append("imagen ", archivo);
     formData.append("nombre", producto.nombre);
     formData.append("precio", producto.precio);
-    formData.append("imagen", archivo)
+  
+    console.log(formData)
     try {
       const res = await clienteAxios.post("/productos", formData, {
         headers: {
-          "Content-Type": "multipart/form-data"
-        }
+          "Content-Type": "multipart/form-data",
+        },
       });
       console.log(res);
-      if(res.status === 200){
-        Swal.fire("Producto agregado Correctamente", res.data.mensaje, "success");
-      }
-    } catch (error) {
+    }
+    catch (error) {
       console.log(error);
       Swal.fire({
         type: "error",
@@ -44,13 +46,13 @@ const NuevoProducto = () => {
         text: "Vuelve a intentarlo"
       })
     }
-    navigate('/', {replace:true});
+    navigate('/productos', {replace:true});
   }
   return (
     <Fragment>
       <h2>Nuevo Producto</h2>
-      <form onSubmit={agregarProducto}>
-        <legend>Lena todos los cambios</legend>
+      <form onSubmit={agregarProducto} >
+        <legend>Llena todos los cambios</legend>
         <div className='campo'>
           <label>Nombre: </label>
           <input type="text" placeholder='Nombre del producto' name='nombre' onChange={leerInformacionProducto}/>
@@ -61,7 +63,7 @@ const NuevoProducto = () => {
         </div>
         <div className='campo'>
           <label>Imagen: </label>
-          <input type="file" name='imagen' onChange={leerArchivo}/>
+          <input type="file" id='imagen' name='imagen' onChange={leerArchivo}/>
         </div>
         <div className='enviar'>
           <input type="submit" className='btn-azul btn' value="Agregar Producto" />

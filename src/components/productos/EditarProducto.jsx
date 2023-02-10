@@ -33,13 +33,41 @@ const EditarProducto = (props) => {
   const leerArchivo = e => {
     guardarArchivo(e.target.files[0]);
   }
+  const editarProducto = async e => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("nombre", producto.nombre);
+    formData.append("precio", producto.precio);
+    formData.append("imagen", archivo);
+    try{
+      const res = await clienteAxios.put(`/productos/${id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      });
+      if(res.status === 200){
+        Swal.fire("Editado correctamente", res.data.mensaje, "success");
+      }
+    }
+    catch (error) {
+      console.log(error);
+      Swal.fire({
+        type: "error",
+        title: "Ha ocurrido un error",
+        text: "Vuelve a intentarlo",
+      })
+    }
+    navigate('/productos', {replace:true});
+  }
+  
+  const navigate = useNavigate();
   //Extraer los valores del state
   const { nombre, precio, imagen } = producto;
   if(!nombre) return <Spinner/>
   return (
     <Fragment>
       <h2>Editar Producto</h2>
-      <form >
+      <form onSubmit={editarProducto}>
       <legend>Llena todos los cambios</legend>
         <div className='campo'>
           <label>Nombre: </label>

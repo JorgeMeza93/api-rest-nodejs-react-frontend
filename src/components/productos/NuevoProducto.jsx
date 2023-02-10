@@ -4,13 +4,11 @@ import clienteAxios from '../../config/axios';
 import { useNavigate } from 'react-router-dom';
 
 const NuevoProducto = () => {
-  
   const [producto, guardarProducto] = useState({
     nombre: "",
     precio: ""
   });
-  const [archivo, guardarArchivo] = useState("");
-  const navigate = useNavigate();
+  const [archivo, guardarArchivo] = useState("pipo");
   const leerInformacionProducto = e => {
     guardarProducto({
       ...producto,
@@ -18,36 +16,34 @@ const NuevoProducto = () => {
     })
   }
   const leerArchivo = e => {
-    guardarArchivo( e.target.files[0])
-    console.log(e.target.files[0].name)
+    guardarArchivo(e.target.files[0]);
   }
-  const agregarProducto = async (e) => {
+  const agregarProducto = async(e) => {
     e.preventDefault();
-    //Especificar como form data para que la api acepte este formato
+    //Especificar como form data para que la api acepte este formato de envio de informacion
     const formData = new FormData();
-    formData.append("imagen ", archivo);
     formData.append("nombre", producto.nombre);
     formData.append("precio", producto.precio);
-  
-    console.log(formData)
-    try {
+    formData.append("imagen", archivo);
+    try{
       const res = await clienteAxios.post("/productos", formData, {
         headers: {
-          "Content-Type": "multipart/form-data",
-        },
+          "Content-Type": "multipart/form-data"
+        }
       });
-      console.log(res);
     }
     catch (error) {
       console.log(error);
       Swal.fire({
         type: "error",
         title: "Ha ocurrido un error",
-        text: "Vuelve a intentarlo"
+        text: "Vuelve a intentarlo",
       })
     }
     navigate('/productos', {replace:true});
+    console.log(archivo);
   }
+  const navigate = useNavigate();
   return (
     <Fragment>
       <h2>Nuevo Producto</h2>

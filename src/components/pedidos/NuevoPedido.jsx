@@ -40,11 +40,19 @@ function NuevoPedido(){
     const leerDatosBusqueda = (e) => {
         guardarBusqueda(e.target.value)
     }
-    const restarProductos = () => {
-        console.log("Uno menos");
+    const restarProductos = (i) => {
+        const todosProductos = [...productos];
+        if(todosProductos[i].cantidad === 0){
+            return
+        }
+        todosProductos[i].cantidad = todosProductos[i].cantidad - 1;
+        guardarProductos(todosProductos);
     }
-    const sumarProductos = () => {
-        console.log("Uno más")
+    const sumarProductos = (i) => {
+       const todosProductos = [...productos];
+       todosProductos[i].cantidad++;
+       guardarProductos(todosProductos)
+       
     }
     return(
         <Fragment>

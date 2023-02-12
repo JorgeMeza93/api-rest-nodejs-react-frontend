@@ -3,11 +3,14 @@ import { useParams } from "react-router-dom";
 import clienteAxios from "../../config/axios";
 import FormBuscarProducto from "./FormBuscarProducto";
 import Swal from "sweetalert2";
+import FormCantidadProducto from "./FormCantidadProducto";
 
 function NuevoPedido(){
     const { id } = useParams();
     const [cliente, guardarCliente] = useState({});
-    const [busqueda, guardarBusqueda] = useState("pipo")
+    const [busqueda, guardarBusqueda] = useState("manolo");
+    const [productos, guardarProductos] = useState([]);
+
     const consultarAPI = async () => {
         const resultado = await clienteAxios.get(`/cliente/${id}`)
         guardarCliente(resultado.data);
@@ -20,7 +23,11 @@ function NuevoPedido(){
         //Obtener los productos de la búsqueda
         const resultado = await clienteAxios.post(`/productos/busqueda/${busqueda}`);
         if(resultado.data[0]){
-
+            let productoResultado = resultado.data[0];
+            productoResultado.producto = resultado.data[0]._id;
+            productoResultado.cantidad = 0;
+            guardarProductos([...productos, productoResultado])
+            console.log(productos);
         }
         else{
             Swal.fire({
@@ -44,22 +51,9 @@ function NuevoPedido(){
             </div>
             <FormBuscarProducto buscarProducto={buscarProducto} leerDatosBusqueda={leerDatosBusqueda} />
             <ul className="resumen">
-                <li>
-                    <div className="texto-producto">
-                        <p className="nombre">Macbook pro</p>
-                        <p className="precio">230</p>
-                    </div>
-                    <div className="acciones">
-                        <div className="contenedor-cantidad">
-                            <i className="fas fa-minus"></i>
-                            <input type="text" name="cantidad" />
-                            <i className="fas fa-plus"></i>
-                        </div>
-                        <button type="button" className="btn btn-rojo">
-                            <i className="fas fa-minus-circle"></i>Eliminar Producto
-                        </button>
-                    </div>
-                </li>
+                {productos.map( (producto, index) => {
+                    return <FormCantidadProducto key={producto.producto} producto={producto} />
+                })}
             </ul>
             <div className="campo">
                 <label>Total:</label>

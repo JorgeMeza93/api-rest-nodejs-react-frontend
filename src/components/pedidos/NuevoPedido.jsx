@@ -2,10 +2,12 @@ import React, { Fragment, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import clienteAxios from "../../config/axios";
 import FormBuscarProducto from "./FormBuscarProducto";
+import Swal from "sweetalert2";
 
 function NuevoPedido(){
     const { id } = useParams();
     const [cliente, guardarCliente] = useState({});
+    const [busqueda, guardarBusqueda] = useState("pipo")
     const consultarAPI = async () => {
         const resultado = await clienteAxios.get(`/cliente/${id}`)
         guardarCliente(resultado.data);
@@ -13,22 +15,34 @@ function NuevoPedido(){
     useEffect( () => {
         consultarAPI();
     }, []);
-    const buscarProducto = () => {
+    const buscarProducto = async (e) => {
+        e.preventDefault();
+        //Obtener los productos de la búsqueda
+        const resultado = await clienteAxios.post(`/productos/busqueda/${busqueda}`);
+        if(resultado.data[0]){
 
+        }
+        else{
+            Swal.fire({
+                icon: "error",
+                title: "No encontrado",
+                text: "Termino en la búsqueda no encontrado",
+                })
+        }
     }
-    const leerDatosBusqueda = () => {
-
+    const leerDatosBusqueda = (e) => {
+        guardarBusqueda(e.target.value)
     }
     return(
         <Fragment>
-            <h2>Nuevo Producto</h2>
+            <h2>Nuevo Pedido</h2>
             <div className="ficha-cliente">
                 <h3>Datos de Cliente</h3>
                 <p>Nombre: {cliente.nombre} {cliente.apellido}</p>
                 <p>Email: {cliente.email}</p>
                 <p>Teléfono: {cliente.telefono}</p>
             </div>
-            <FormBuscarProducto buscarProducto={buscarProducto} leetDatosBusqueda={leerDatosBusqueda} />
+            <FormBuscarProducto buscarProducto={buscarProducto} leerDatosBusqueda={leerDatosBusqueda} />
             <ul className="resumen">
                 <li>
                     <div className="texto-producto">

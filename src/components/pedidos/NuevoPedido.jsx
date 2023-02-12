@@ -40,6 +40,12 @@ function NuevoPedido(){
     const leerDatosBusqueda = (e) => {
         guardarBusqueda(e.target.value)
     }
+    const restarProductos = () => {
+        console.log("Uno menos");
+    }
+    const sumarProductos = () => {
+        console.log("Uno más")
+    }
     return(
         <Fragment>
             <h2>Nuevo Pedido</h2>
@@ -52,7 +58,7 @@ function NuevoPedido(){
             <FormBuscarProducto buscarProducto={buscarProducto} leerDatosBusqueda={leerDatosBusqueda} />
             <ul className="resumen">
                 {productos.map( (producto, index) => {
-                    return <FormCantidadProducto key={producto.producto} producto={producto} />
+                    return <FormCantidadProducto key={producto.producto} producto={producto} restarProductos={restarProductos} sumarProductos={sumarProductos} index={index}/>
                 })}
             </ul>
             <div className="campo">

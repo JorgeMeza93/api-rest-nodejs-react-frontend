@@ -1,7 +1,8 @@
 import React, { Fragment } from 'react'
 
-function FormCantidadProducto({producto}) {
-  return (
+function FormCantidadProducto(props) {
+  const { producto, sumarProductos, restarProductos, index } = props;
+    return (
     <Fragment>
         <li>
             <div className="texto-producto">
@@ -10,9 +11,9 @@ function FormCantidadProducto({producto}) {
             </div>
             <div className="acciones">
                 <div className="contenedor-cantidad">
-                    <i className="fas fa-minus"></i>
+                    <i className="fas fa-minus" onClick={ () => restarProductos(index) } ></i>
                     <p>{producto.cantidad}</p>
-                    <i className="fas fa-plus"></i>
+                    <i className="fas fa-plus" onClick={ () => sumarProductos(index) }></i>
                 </div>
                 <button type="button" className="btn btn-rojo">
                     <i className="fas fa-minus-circle"></i>Eliminar Producto

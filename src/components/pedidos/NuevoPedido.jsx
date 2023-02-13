@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Form, useParams } from "react-router-dom";
 import clienteAxios from "../../config/axios";
 import FormBuscarProducto from "./FormBuscarProducto";
 import Swal from "sweetalert2";
@@ -10,6 +10,7 @@ function NuevoPedido(){
     const [cliente, guardarCliente] = useState({});
     const [busqueda, guardarBusqueda] = useState("manolo");
     const [productos, guardarProductos] = useState([]);
+    const [total, guardarTotal] = useState(0);
 
     const consultarAPI = async () => {
         const resultado = await clienteAxios.get(`/cliente/${id}`)
@@ -17,7 +18,8 @@ function NuevoPedido(){
     }
     useEffect( () => {
         consultarAPI();
-    }, []);
+        actualizarTotal();
+    }, [productos]);
     const buscarProducto = async (e) => {
         e.preventDefault();
         //Obtener los productos de la búsqueda
@@ -52,7 +54,17 @@ function NuevoPedido(){
        const todosProductos = [...productos];
        todosProductos[i].cantidad++;
        guardarProductos(todosProductos)
-       
+    }
+    const actualizarTotal = () => {
+        if(productos.length === 0){
+            guardarTotal(0);
+            return
+        }
+        let nuevoTotal = 0;
+        productos.map( producto => {
+            return nuevoTotal += (producto.cantidad * producto.precio)
+        });
+        guardarTotal(nuevoTotal);
     }
     return(
         <Fragment>
@@ -69,13 +81,12 @@ function NuevoPedido(){
                     return <FormCantidadProducto key={producto.producto} producto={producto} restarProductos={restarProductos} sumarProductos={sumarProductos} index={index}/>
                 })}
             </ul>
-            <div className="campo">
-                <label>Total:</label>
-                <input type="number" name="precio" placeholder="Precio" readOnly="readonly" />
-            </div>
-            <div className="enviar">
-                <input type="submit" className="btn btn-azul" value="Agregar Pedido" />
-            </div>
+            <p className="total">Total a pagar: <span>${total}</span></p>
+            { total > 0 ? (
+                <form>
+                    <input type="submit" className="btn btn-verde btn-block" value="Realizar " />
+                </form>
+            ): null}
         </Fragment>
     )
 }

@@ -75,15 +75,24 @@ function NuevoPedido(){
         e.preventDefault();
         const pedido = {
             "cliente": id,
-            "pedidos": productos,
+            "articulo": productos,
             "total": total
         }
+        console.log(pedido);
         const resultado = await clienteAxios.post(`/pedidos/nuevo/${id}`, pedido);
         if(resultado.status === 200){
-
+            Swal.fire({
+                icon: "success",
+                title: "Correcto",
+                text: resultado.data.mensaje
+            })
         }
         else{
-
+            Swal.fire({
+                icon: "error",
+                title: "Ha ocurrido un error",
+                text: "Intenta nuevamente"
+            })
         }
         navigate("/pedidos", {replace: true})
     }

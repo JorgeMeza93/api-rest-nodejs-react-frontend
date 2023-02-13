@@ -19,7 +19,7 @@ const Producto = ({ producto }) => {
       if(result.value){
         clienteAxios.delete(`/productos/${id}`)
           .then( res => {
-            if(res.status == 200){
+            if(res.status === 200){
               Swal.fire("Eliminado", res.data.mensaje, "success");
             }
           })

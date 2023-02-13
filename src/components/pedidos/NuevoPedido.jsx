@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { Form, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import clienteAxios from "../../config/axios";
 import FormBuscarProducto from "./FormBuscarProducto";
 import Swal from "sweetalert2";
@@ -70,6 +70,15 @@ function NuevoPedido(){
         const todosProductos = productos.filter( producto => producto.producto !== id );
         guardarProductos(todosProductos);
     }
+    const realizarPedido = async (e) => {
+        e.preventDefault();
+        const pedido = {
+            "cliente": id,
+            "pedidos": productos,
+            "total": total
+        }
+        console.log(pedido)
+    }
     return(
         <Fragment>
             <h2>Nuevo Pedido</h2>
@@ -88,7 +97,7 @@ function NuevoPedido(){
             </ul>
             <p className="total">Total a pagar: <span>${total}</span></p>
             { total > 0 ? (
-                <form>
+                <form onSubmit={realizarPedido}>
                     <input type="submit" className="btn btn-verde btn-block" value="Realizar" />
                 </form>
             ): null}

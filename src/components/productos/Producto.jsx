@@ -40,7 +40,7 @@ const Producto = ({ producto }) => {
                 <i className='fas fa-pen-alt'></i>Editar Producto
             </Link>
             <button type='button' className='btn btn-rojo btn-eliminar' onClick={ () => eliminarProducto(_id)}>
-                <i className='fas fa-times'></i>Eliminar Cliente
+                <i className='fas fa-times'></i>Eliminar Producto
             </button>
         </div>
     </li>

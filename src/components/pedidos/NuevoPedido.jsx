@@ -4,6 +4,7 @@ import clienteAxios from "../../config/axios";
 import FormBuscarProducto from "./FormBuscarProducto";
 import Swal from "sweetalert2";
 import FormCantidadProducto from "./FormCantidadProducto";
+import { useNavigate } from 'react-router-dom';
 
 function NuevoPedido(){
     const { id } = useParams();
@@ -77,8 +78,16 @@ function NuevoPedido(){
             "pedidos": productos,
             "total": total
         }
-        console.log(pedido)
+        const resultado = await clienteAxios.post(`/pedidos/nuevo/${id}`, pedido);
+        if(resultado.status === 200){
+
+        }
+        else{
+
+        }
+        navigate("/pedidos", {replace: true})
     }
+    const navigate = useNavigate();
     return(
         <Fragment>
             <h2>Nuevo Pedido</h2>

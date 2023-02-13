@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 
 function FormCantidadProducto(props) {
-  const { producto, sumarProductos, restarProductos, index } = props;
+  const { producto, sumarProductos, restarProductos, index, eliminarProductosPedidos } = props;
     return (
     <Fragment>
         <li>
@@ -15,7 +15,7 @@ function FormCantidadProducto(props) {
                     <p>{producto.cantidad}</p>
                     <i className="fas fa-plus" onClick={ () => sumarProductos(index) }></i>
                 </div>
-                <button type="button" className="btn btn-rojo">
+                <button type="button" className="btn btn-rojo" onClick={ () => eliminarProductosPedidos(producto._id) }>
                     <i className="fas fa-minus-circle"></i>Eliminar Producto
                 </button>
             </div>

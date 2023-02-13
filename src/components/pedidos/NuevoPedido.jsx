@@ -66,6 +66,10 @@ function NuevoPedido(){
         });
         guardarTotal(nuevoTotal);
     }
+    const eliminarProductosPedidos = (id) => {
+        const todosProductos = productos.filter( producto => producto.producto !== id );
+        guardarProductos(todosProductos);
+    }
     return(
         <Fragment>
             <h2>Nuevo Pedido</h2>
@@ -78,13 +82,14 @@ function NuevoPedido(){
             <FormBuscarProducto buscarProducto={buscarProducto} leerDatosBusqueda={leerDatosBusqueda} />
             <ul className="resumen">
                 {productos.map( (producto, index) => {
-                    return <FormCantidadProducto key={producto.producto} producto={producto} restarProductos={restarProductos} sumarProductos={sumarProductos} index={index}/>
+                    return <FormCantidadProducto key={producto.producto} producto={producto} 
+                            restarProductos={restarProductos} sumarProductos={sumarProductos} index={index} eliminarProductosPedidos={eliminarProductosPedidos} />
                 })}
             </ul>
             <p className="total">Total a pagar: <span>${total}</span></p>
             { total > 0 ? (
                 <form>
-                    <input type="submit" className="btn btn-verde btn-block" value="Realizar " />
+                    <input type="submit" className="btn btn-verde btn-block" value="Realizar" />
                 </form>
             ): null}
         </Fragment>

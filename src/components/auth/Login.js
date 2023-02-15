@@ -1,12 +1,14 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useContext, useState } from 'react';
 import Swal from 'sweetalert2';
 import clienteAxios from '../../config/axios';
+import { Context } from '../../context/Context';
 
 const Login = () => {
     const [credenciales, guardarCredenciales] = useState({
         email: "",
         password: ""
-    })
+    });
+    const [auth, guardarAuth] = useContext( Context )
     const leerDatos = (e) => {
         guardarCredenciales({
             ...credenciales,
@@ -20,6 +22,10 @@ const Login = () => {
             //Extraer token y almacenarlo en localstorage
             const { token } = respuesta.data;
             localStorage.setItem("token", token);
+            guardarAuth({
+                token,
+                auth: true
+            })
             Swal.fire("Login Exitoso", "Has Iniciado Sesión", "success");
         } catch (error) {
             console.log(error);

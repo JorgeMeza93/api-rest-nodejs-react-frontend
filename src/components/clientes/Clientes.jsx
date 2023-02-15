@@ -1,11 +1,15 @@
-import React, { useEffect, useState, Fragment } from 'react'
+import React, { useEffect, useState, Fragment, useContext } from 'react'
 import clienteAxios from '../../config/axios';
 import Cliente from './Cliente';
 import { Link } from 'react-router-dom';
 import Spinner from '../layout/Spinner';
+import { Context } from '../../context/Context';
 
 const Clientes = () => {
   const [ clientes, guardarClientes ] = useState([]);
+   // Utilizar valores del context
+   const [auth, guardarAuth] = useContext(Context)
+   console.log(auth);
   const consultarAPI = async () => {
     const clientesConsulta = await clienteAxios.get("/clientes");
     // Colocar el resultado de la consulta en el state

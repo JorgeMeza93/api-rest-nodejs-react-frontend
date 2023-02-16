@@ -29,11 +29,20 @@ const Login = () => {
             Swal.fire("Login Exitoso", "Has Iniciado Sesión", "success");
         } catch (error) {
             console.log(error);
-            Swal.fire({
-                icon: "error",
-                title: "Ha ocurrido un error",
-                text: error.response.data.mensaje
-            })
+            if(error.response){
+                Swal.fire({
+                    icon: "error",
+                    title: "Ha ocurrido un error",
+                    text: error.response.data.mensaje
+                })
+            }
+            else{
+                Swal.fire({
+                    icon: "error",
+                    title: "Ha ocurrido un error",
+                    text: "Ha ocurrido un error"
+                })
+            }
         }
     }
     return (

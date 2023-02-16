@@ -1,10 +1,12 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useContext, useState} from 'react';
 import clienteAxios from '../../config/axios';
 import Swal from "sweetalert2";
 import { useNavigate } from 'react-router-dom';
+import { Context } from '../../context/Context';
 
 const NuevoCliente = () => {
-  const [cliente, guardarCliente] = useState({
+    const [auth, guardarAuth] = useContext(Context);
+    const [cliente, guardarCliente] = useState({
     nombre: "",
     apellido: "",
     empresa: "",
@@ -41,6 +43,9 @@ const NuevoCliente = () => {
             navigate('/', {replace:true});
         })
 
+  }
+  if(!auth.auth && (localStorage.getItem("token") === auth.token)){
+   return null
   }
   return (
     <Fragment>

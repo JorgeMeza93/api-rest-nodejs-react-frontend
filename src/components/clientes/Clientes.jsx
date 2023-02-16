@@ -1,23 +1,43 @@
 import React, { useEffect, useState, Fragment, useContext } from 'react'
 import clienteAxios from '../../config/axios';
 import Cliente from './Cliente';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Spinner from '../layout/Spinner';
 import { Context } from '../../context/Context';
 
 const Clientes = () => {
   const [ clientes, guardarClientes ] = useState([]);
+  const navigate = useNavigate();
    // Utilizar valores del context
    const [auth, guardarAuth] = useContext(Context)
-   console.log(auth);
   const consultarAPI = async () => {
-    const clientesConsulta = await clienteAxios.get("/clientes");
-    // Colocar el resultado de la consulta en el state
-    guardarClientes(clientesConsulta.data)
+    try {
+      const clientesConsulta = await clienteAxios.get("/clientes", {
+        headers: {
+          Authorization: `Bearer ${auth.token}`
+        }
+      });
+      // Colocar el resultado de la consulta en el state
+      guardarClientes(clientesConsulta.data)
+    } 
+    catch (error) {
+      if(error.response.status === 500){
+        navigate("/login");
+      }
+    }
+    
   }
   useEffect( () => {
-    consultarAPI();
+    if(auth.token !== ""){
+      consultarAPI();
+    }
+    else{
+      navigate("/login")
+    }
   }, [clientes])   // Cuando clientes cambie vuelve a hacer el llamado a la API
+  if(!auth.auth){
+    navigate("/login");
+  }
   if(! clientes.length){
     return <Spinner/>
   }
